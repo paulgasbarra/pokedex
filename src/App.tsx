@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Search from "./components/Search/Search";
 import SearchResults from "./components/SearchResults/SearchResults";
+import SelectedPokemon from "./components/SelectedPokemon/SelectedPokemon";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "./store";
 import { fetchPokemons } from "./slices/pokedexSlice";
@@ -12,7 +13,6 @@ interface Pokemon {
 }
 
 function App() {
-  const [pokemon, setPokemon] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [filteredPokemon, setFilteredPokemon] = useState([]);
 
@@ -25,16 +25,13 @@ function App() {
     if (apiStatus === "idle") {
       dispatch(fetchPokemons());
     }
-    console.log("IN APP", pokemons);
   }, [apiStatus, dispatch]);
 
   const onSearchChange = (searchString: string) => {
     setSearchValue(searchString.toLowerCase());
     filterPokemons(searchString);
   };
-  // need to display blank results page if no search value
 
-  // need to filter pokemons here
   const filterPokemons = (searchString: string) => {
     const filteredPokemons = pokemons.filter((pokemon: Pokemon) => {
       return pokemon.name.includes(searchString);
@@ -74,6 +71,7 @@ function App() {
         filteredPokemon={filteredPokemon}
         searchValue={searchValue}
       />
+      <SelectedPokemon />
     </div>
   );
 }
