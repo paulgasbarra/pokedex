@@ -5,7 +5,7 @@ interface Pokemon {
     url: string;
   }
   
-  interface PokedexState {
+  export interface PokedexState {
     pokemons: Pokemon[];
     selectedPokemon: Pokemon | null;
     searchQuery: string;
@@ -44,12 +44,6 @@ const pokedexSlice = createSlice({
     selectPokemon: (state, action) => {
       state.selectedPokemon = action.payload;
     },
-    setSearchQuery: (state, action) => {
-      state.searchQuery = action.payload;
-    },
-    setFilter: (state, action) => {
-      state.filter = action.payload;
-    }
   },
   extraReducers: builder => {
     builder
@@ -68,4 +62,4 @@ const pokedexSlice = createSlice({
 });
 
 export default pokedexSlice.reducer;
-export const { selectPokemon, setSearchQuery, setFilter } = pokedexSlice.actions;
+export const { selectPokemon } = pokedexSlice.actions;

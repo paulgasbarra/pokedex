@@ -3,9 +3,10 @@ import "./App.css";
 import Search from "./components/Search/Search";
 import SearchResults from "./components/SearchResults/SearchResults";
 import SelectedPokemon from "./components/SelectedPokemon/SelectedPokemon";
+import SearchHistory from "./components/SearchHistory/SearchHistory";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "./store";
-import { fetchPokemons } from "./slices/pokedexSlice";
+import { fetchPokemons, selectPokemon } from "./slices/pokedexSlice";
 
 interface Pokemon {
   name: string;
@@ -15,6 +16,7 @@ interface Pokemon {
 function App() {
   const [searchValue, setSearchValue] = useState("");
   const [filteredPokemon, setFilteredPokemon] = useState([]);
+  const [searchHistory, setSearchHistory] = useState<Pokemon[]>([]);
 
   const dispatch: AppDispatch = useDispatch();
   const pokemons = useSelector((state: RootState) => state.pokedex.pokemons);
@@ -29,7 +31,7 @@ function App() {
 
   const onSearchChange = (searchString: string) => {
     setSearchValue(searchString.toLowerCase());
-    filterPokemons(searchString);
+    filterPokemons(searchString.toLowerCase());
   };
 
   const filterPokemons = (searchString: string) => {
@@ -39,11 +41,12 @@ function App() {
     setFilteredPokemon(filteredPokemons);
   };
 
-  // need to store history of search values
-
-  // need to display pokemon if only one result
-
-  // need to allow user to select pokemon if multiple results
+  const setSelectedPokemon = (pokemon: Pokemon) => {
+    dispatch(selectPokemon(pokemon));
+    if (!searchHistory.includes(pokemon)) {
+      setSearchHistory([...searchHistory, pokemon]);
+    }
+  };
 
   if (apiStatus === "failed") {
     return (
@@ -66,12 +69,19 @@ function App() {
   return (
     <div className="App">
       <h1>Pokedex</h1>
-      <Search onSearchChange={onSearchChange} />
-      <SearchResults
-        filteredPokemon={filteredPokemon}
-        searchValue={searchValue}
-      />
       <SelectedPokemon />
+      <div className="sections">
+        <Search onSearchChange={onSearchChange} />
+        <SearchResults
+          filteredPokemon={filteredPokemon}
+          searchValue={searchValue}
+          setSelectedPokemon={setSelectedPokemon}
+        />
+        <SearchHistory
+          searchHistory={searchHistory}
+          setSelectedPokemon={setSelectedPokemon}
+        />
+      </div>
     </div>
   );
 }
