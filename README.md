@@ -29,5 +29,3 @@ _Features To Add_
 It's a fun api and there is a lot that can be done with it.
 
 Thank you for the coding opportunity. Hope you enjoy.
-
-There are many features that could be added.
