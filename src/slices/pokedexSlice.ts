@@ -14,6 +14,7 @@ interface Pokemon {
     apiError: string | null;
   }
   
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const initialState: PokedexState = {
     pokemons: [],
     selectedPokemon: null,
@@ -26,7 +27,6 @@ interface Pokemon {
 export const fetchPokemons = createAsyncThunk('pokedex/fetchPokemons', async () => {
   const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1020');  // 1020 pokemons, gotta catch 'em all!
   const data = await response.json();
-  console.log(data.results)
   return data.results;
 });
 

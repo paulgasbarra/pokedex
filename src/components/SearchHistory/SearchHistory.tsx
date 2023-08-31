@@ -1,4 +1,5 @@
 import React from "react";
+import ListItem from "../ListItem/ListItem";
 import { Pokemon } from "../../types";
 
 interface SearchHistoryProps {
@@ -24,9 +25,11 @@ const SearchHistory: React.FC<SearchHistoryProps> = ({
       <h1>Search History</h1>
       {searchHistory.map((pokemon: Pokemon) => {
         return (
-          <div key={pokemon.name} onClick={() => setSelectedPokemon(pokemon)}>
-            {pokemon.name}
-          </div>
+          <ListItem
+            key={pokemon.name}
+            pokemon={pokemon}
+            setSelectedPokemon={setSelectedPokemon}
+          />
         );
       })}
     </div>

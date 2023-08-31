@@ -1,8 +1,10 @@
+import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { Pokemon } from "../../types";
 
 const SelectedPokemon = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const selectedPokemon: Pokemon | any = useSelector(
     (state: RootState) => state.pokedex.selectedPokemon
   );

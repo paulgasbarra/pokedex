@@ -1,4 +1,5 @@
 import React from "react";
+import ListItem from "../ListItem/ListItem";
 import { Pokemon } from "../../types";
 
 interface SearchResultsProps {
@@ -27,9 +28,11 @@ const SearchResults: React.FC<SearchResultsProps> = ({
       {filteredPokemon.length > 0 && searchValue.length > 0 ? (
         filteredPokemon.map((pokemon: Pokemon) => {
           return (
-            <div key={pokemon.name} onClick={() => setSelectedPokemon(pokemon)}>
-              {pokemon.name}
-            </div>
+            <ListItem
+              key={pokemon.name}
+              pokemon={pokemon}
+              setSelectedPokemon={setSelectedPokemon}
+            />
           );
         })
       ) : (
