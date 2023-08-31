@@ -26,6 +26,10 @@ describe("App", () => {
     });
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("dispatches fetchPokemons on initial render if apiStatus is idle", () => {
     render(<App />);
     expect(mockDispatch).toHaveBeenCalled();
